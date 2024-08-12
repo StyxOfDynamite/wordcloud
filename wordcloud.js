@@ -57,7 +57,7 @@ function generateWordCloud() {
         let placed = false;
         let attempts = 0;
 
-        while (!placed && attempts < 100) { // Limit the number of attempts
+        while (!placed && attempts < 300) { // Limit the number of attempts
             let angle, radius, x, y;
 
             if (index === 0) {
