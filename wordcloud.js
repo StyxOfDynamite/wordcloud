@@ -107,9 +107,36 @@ function isCollision(wordBounds, placedWords) {
 }
 
 function downloadCanvas() {
-    const canvas = document.getElementById("wordCloudCanvas");
-    const link = document.createElement("a");
-    link.href = canvas.toDataURL("image/png");
-    link.download = "wordcloud.png";
+    const canvas = document.getElementById('wordCloudCanvas');
+    const originalWidth = canvas.width;
+    const originalHeight = canvas.height;
+    
+    // Calculate scale factor for 150 DPI
+    const dpi = 150;
+    const scaleFactor = dpi / 96; // Assuming the default DPI is 96
+
+    // Increase the canvas size
+    canvas.width = originalWidth * scaleFactor;
+    canvas.height = originalHeight * scaleFactor;
+
+    // Scale the context
+    const ctx = canvas.getContext('2d');
+    ctx.scale(scaleFactor, scaleFactor);
+
+    // Redraw the word cloud on the larger canvas
+    generateWordCloud();
+
+    // Download the image
+    const link = document.createElement('a');
+    link.download = 'wordcloud.png';
+    link.href = canvas.toDataURL('image/png');
     link.click();
+
+    // Restore the original canvas size
+    canvas.width = originalWidth;
+    canvas.height = originalHeight;
+
+    // Re-render the word cloud on the original canvas size
+    ctx.scale(1 / scaleFactor, 1 / scaleFactor);
+    generateWordCloud();
 }
