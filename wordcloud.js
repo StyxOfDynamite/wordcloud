@@ -107,36 +107,19 @@ function isCollision(wordBounds, placedWords) {
 }
 
 function downloadCanvas() {
-    const canvas = document.getElementById('wordCloudCanvas');
-    const originalWidth = canvas.width;
-    const originalHeight = canvas.height;
-    
-    // Calculate scale factor for 150 DPI
-    const dpi = 150;
-    const scaleFactor = dpi / 96; // Assuming the default DPI is 96
+    const canvas = document.getElementById("wordCloudCanvas");
+    const scaledCanvas = document.createElement("canvas");
+    const scale = 10; // Scale factor
 
-    // Increase the canvas size
-    canvas.width = originalWidth * scaleFactor;
-    canvas.height = originalHeight * scaleFactor;
+    scaledCanvas.width = canvas.width * scale;
+    scaledCanvas.height = canvas.height * scale;
 
-    // Scale the context
-    const ctx = canvas.getContext('2d');
-    ctx.scale(scaleFactor, scaleFactor);
+    const ctx = scaledCanvas.getContext("2d");
+    ctx.scale(scale, scale);
+    ctx.drawImage(canvas, 0, 0);
 
-    // Redraw the word cloud on the larger canvas
-    generateWordCloud();
-
-    // Download the image
-    const link = document.createElement('a');
-    link.download = 'wordcloud.png';
-    link.href = canvas.toDataURL('image/png');
+    const link = document.createElement("a");
+    link.href = scaledCanvas.toDataURL();
+    link.download = "wordcloud.png";
     link.click();
-
-    // Restore the original canvas size
-    canvas.width = originalWidth;
-    canvas.height = originalHeight;
-
-    // Re-render the word cloud on the original canvas size
-    ctx.scale(1 / scaleFactor, 1 / scaleFactor);
-    generateWordCloud();
 }
