@@ -5,89 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Word Cloud Generator</title>
     <style>
-     body {
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #f3a0ff, #a066ff);
-    color: #fff;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
-}
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #f3a0ff, #a066ff);
+        color: #fff;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        height: 100vh;
+      }
 
-h1 {
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 40px;
-    color: #ffffff;
-}
+      h1 {
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 40px;
+        color: #ffffff;
+      }
 
-.container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 100vh;
-}
+      .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        max-width: 1200px;
+        margin: 0 auto;
+        height: 100vh;
+        flex-wrap: wrap; /* Allows wrapping on smaller screens */
+      }
 
-.controls {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    max-width: 350px;
-    margin-right: 20px;
-    box-sizing: border-box;
-}
+      .controls {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        max-width: 350px;
+        margin-right: 20px;
+        margin-bottom: 20px; /* Add margin to the bottom for spacing */
+        box-sizing: border-box;
+        flex: 1; /* Allow it to grow and shrink */
+        min-width: 280px; /* Set a minimum width for smaller screens */
+      }
 
-.controls textarea {
-    width: 100%; /* Full width of the parent container */
-    height: 150px; /* Fixed height */
-    font-size: 16px;
-    margin-bottom: 15px;
-    padding: 10px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    background-color: rgba(255, 255, 255, 0.3);
-    color: #fff;
-    resize: none; /* Disable resizing */
-    box-sizing: border-box; /* Ensure padding is included in width */
-}
+      .controls textarea {
+        width: 100%;
+        height: 150px;
+        font-size: 16px;
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background-color: rgba(255, 255, 255, 0.3);
+        color: #fff;
+        resize: none;
+        box-sizing: border-box;
+      }
 
-.controls input[type="color"] {
-    width: 100%;
-    height: 50px;
-    margin-bottom: 15px;
-    border: none;
-    border-radius: 8px;
-    outline: none;
-    cursor: pointer;
-}
+      .controls input[type="color"] {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 8px;
+        outline: none;
+        cursor: pointer;
+      }
 
-.controls button {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(135deg, #ff77cc, #b04bff);
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background 0.3s ease;
-}
+      .controls button {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ff77cc, #b04bff);
+        color: #fff;
+        font-size: 18px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        transition: background 0.3s ease;
+      }
 
-.controls button:hover {
-    background: linear-gradient(135deg, #ff61b6, #9645e5);
-}
+      .controls button:hover {
+        background: linear-gradient(135deg, #ff61b6, #9645e5);
+      }
 
-canvas {
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    background-color: #ffffff;
-}
+      canvas {
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        background-color: #ffffff;
+        flex: 3; /* Allow canvas to take more space */
+        max-width: 100%; /* Make canvas responsive */
+        height: auto; /* Allow height to adjust automatically */
+      }
 
+      /* Media queries for various screen sizes */
+      @media (max-width: 1024px) {
+        .container {
+          flex-direction: column;
+          align-items: center;
+          height: auto; /* Adjust height for smaller screens */
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 28px; /* Reduce font size on smaller screens */
+          margin-bottom: 30px;
+        }
+
+        .controls {
+          max-width: 100%;
+          margin-right: 0; /* Remove right margin for stacking */
+        }
+
+        .controls textarea {
+          height: 120px; /* Reduce textarea height */
+        }
+
+        .controls button {
+          padding: 12px; /* Adjust button padding */
+          font-size: 16px; /* Adjust button font size */
+        }
+
+        canvas {
+          width: 100%;
+          max-width: 100%; /* Ensure canvas fits within the container */
+        }
+      }
+
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 24px; /* Further reduce font size for small screens */
+          margin-bottom: 20px;
+        }
+
+        .controls textarea {
+          height: 100px; /* Further reduce textarea height */
+          font-size: 14px; /* Reduce font size in textarea */
+        }
+
+        .controls button {
+          padding: 10px; /* Further adjust button padding */
+          font-size: 14px; /* Further adjust button font size */
+        }
+      }
     </style>
   </head>
   <body>
